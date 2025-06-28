@@ -32,7 +32,7 @@ const Main = () => {
             <h2>XAEZOR</h2>
           </div>
           <p className="heroP">
-             creating the creations
+             Sword of Creation
           </p>
         </div>
       </section>

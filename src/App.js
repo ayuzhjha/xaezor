@@ -11,11 +11,12 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Profile from './Components/Profile';
 import Modify from './Components/Modify';
+import WorkInProgress from './Components/WorkInProgress';
 
 
 function AppContent() {
   const location = useLocation();
-  const hideHeaderFooter = ['/login', '/register', '/profile', '/modify'].includes(location.pathname);
+  const hideHeaderFooter = ['/login', '/register', '/profile', '/modify', '/wip'].includes(location.pathname);
 
   const appStyle = {
     cursor: `url(${process.env.PUBLIC_URL + '/cursor.cur'}), auto`,
@@ -31,6 +32,7 @@ function AppContent() {
         <Route path="/apps" element={<Apps />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/join" element={<Join />} />
+        <Route path="/wip" element={<WorkInProgress />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

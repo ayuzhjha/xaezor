@@ -21,6 +21,11 @@ const WorkInProgress = () => {
 
   return (
     <div style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
@@ -30,7 +35,10 @@ const WorkInProgress = () => {
       color: '#fff',
       fontFamily: 'monospace',
       textAlign: 'center',
-      padding: '2rem'
+      padding: '2rem',
+      zIndex: 1000,
+      marginTop: '0',
+      marginBottom: '0'
     }}>
       <div style={{ fontSize: '2.5rem', marginBottom: '1.5rem', animation: 'pulse 1s infinite alternate' }}>
         {messages[msgIndex]}

@@ -43,6 +43,7 @@
 }
 
 .login-form input {
+  font-family: 'Glitch', sans-serif;
   padding: 0.9rem;
   border: transparent;
   background: transparent;

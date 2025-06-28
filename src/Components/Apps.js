@@ -15,6 +15,8 @@ import sumo from '../Assets/css/img/sumobot.png';
 import ttt from '../Assets/css/img/tictactoe.png';
 import rc from '../Assets/css/img/rcbot.png';
 import WorkInProgress from './WorkInProgress';
+import bms from '../Assets/css/img/bms.png';
+import grub from '../Assets/css/img/grub.png';
 
 // Placeholder icons (use your own images if available)
 const placeholder1 = twitter;
@@ -28,6 +30,8 @@ export const Apps = () => {
   const playClickSound = useClickSound();
   const [search, setSearch] = useState('');
   const [isClicked, setIsClicked] = useState(false);
+  const [selectedApp, setSelectedApp] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   // Unique app data for each category
   const sections = [
@@ -35,16 +39,28 @@ export const Apps = () => {
       title: 'Web Apps', 
       appList: [
         { name: 'AMS', icon: twitter, link: 'https://github.com/xaezor/attendance-management-system' },
-        { name: 'Chat App', icon: chat, link: 'https://chat-xaezors-projects.vercel.app/' },
         { name: 'Weather App', icon: wpa, link: '/wip' }
+      ] 
+    },
+    { 
+      title: 'Mobile Apps', 
+      appList: [
+        { name: 'Chat App', icon: chat, link: 'https://github.com/ayuzhjha/Chatroom-Android' },
       ] 
     },
     { 
       title: 'CS Projetcs', 
       appList: [
         { name: 'Xarvis Desktop', icon: xarvis, link: 'https://github.com/xaezor/XARVIS' },
-        { name: 'Tic Tac Toe', icon: ttt, link: 'https://github.com/xaezor/tictactoe' }
+        { name: 'Tic Tac Toe', icon: ttt, link: 'https://github.com/xaezor/tictactoe' },
+        { name: 'BMS', icon: bms, link: 'https://github.com/ayuzhjha/bank-management-system' }
       ] 
+    },
+    {
+      title: 'Linux',
+      appList: [
+        { name: 'Grub Theme', icon: grub, link: 'https://github.com/ayuzhjha/LOQGRUB' }
+      ]
     },
     { 
       title: 'Robotic Projects', 
@@ -61,6 +77,66 @@ export const Apps = () => {
     ? allApps.filter(app => app.name.toLowerCase().includes(search.toLowerCase()))
     : allApps;
 
+  // App details data
+  const appDetails = {
+    'AMS': {
+      description: 'A comprehensive attendance management system for educational institutions.',
+      rating: 4.5,
+      reviews: 12,
+      bugs: 2,
+      openLink: 'https://github.com/xaezor/attendance-management-system'
+    },
+    'Weather App': {
+      description: 'Real-time weather forecasting application with location-based services.',
+      rating: 4.2,
+      reviews: 8,
+      bugs: 1,
+      openLink: '/wip'
+    },
+    'Chat App': {
+      description: 'Real-time messaging application with modern UI and secure communication.',
+      rating: 4.7,
+      reviews: 15,
+      bugs: 0,
+      openLink: 'https://github.com/ayuzhjha/Chatroom-Android'
+    },
+    'Xarvis Desktop': {
+      description: 'Advanced desktop assistant with AI-powered features and automation.',
+      rating: 4.8,
+      reviews: 23,
+      bugs: 1,
+      openLink: 'https://github.com/xaezor/XARVIS'
+    },
+    'Tic Tac Toe': {
+      description: 'Classic Tic Tac Toe game with modern graphics and multiplayer support.',
+      rating: 4.0,
+      reviews: 6,
+      bugs: 0,
+      openLink: 'https://github.com/xaezor/tictactoe'
+    },
+    'BMS': {
+      description: 'Bank management system for handling customer accounts and transactions.',
+      rating: 4.3,
+      reviews: 9,
+      bugs: 2,
+      openLink: 'https://github.com/ayuzhjha/bank-management-system'
+    },
+    'Sumo Bot': {
+      description: 'Autonomous sumo wrestling robot with advanced sensors and AI algorithms.',
+      rating: 4.6,
+      reviews: 18,
+      bugs: 1,
+      openLink: 'https://www.hackster.io/xaezor/wired-sumo-bot-597338'
+    },
+    'RC Bot': {
+      description: 'Remote controlled robot with wireless communication and real-time control.',
+      rating: 4.4,
+      reviews: 11,
+      bugs: 1,
+      openLink: 'https://rcbot-xaezors-projects.vercel.app/'
+    }
+  };
+
   const handleBannerClick = () => {
     setIsClicked(true);
     playClickSound();
@@ -69,6 +145,46 @@ export const Apps = () => {
 
   const handleVideoEnded = (e) => {
     e.target.pause();
+  };
+
+  const handleViewClick = (app) => {
+    setSelectedApp(app);
+    setShowPopup(true);
+    playClickSound();
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setSelectedApp(null);
+  };
+
+  const handleOpenApp = () => {
+    if (selectedApp && selectedApp.link) {
+      if (selectedApp.link.startsWith('/')) {
+        // Internal route
+        window.location.href = selectedApp.link;
+      } else {
+        // External link
+        window.open(selectedApp.link, '_blank');
+      }
+    }
+  };
+
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    
+    for (let i = 0; i < fullStars; i++) {
+      stars.push('★');
+    }
+    if (hasHalfStar) {
+      stars.push('☆');
+    }
+    for (let i = stars.length; i < 5; i++) {
+      stars.push('☆');
+    }
+    return stars.join('');
   };
 
   return (
@@ -138,21 +254,139 @@ export const Apps = () => {
                   </div>
                   {/* App Name */}
                   <div className="app-card-name">{appItem.name}</div>
-                  {/* Install Button */}
-                  <a 
-                    href={appItem.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* View Button */}
+                  <button 
                     className="app-card-install-btn"
-                    onClick={playClickSound}
+                    onClick={() => handleViewClick(appItem)}
                   >
                     View
-                  </a>
+                  </button>
                 </div>
               ))}
           </div>
         </div>
       ))}
+
+      {/* Popup Modal */}
+      {showPopup && selectedApp && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000,
+          backdropFilter: 'blur(5px)'
+        }}>
+          <div style={{
+            backgroundColor: '#1a1a1a',
+            borderRadius: '1rem',
+            padding: '2rem',
+            maxWidth: '500px',
+            width: '90%',
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            border: '2px solid #00ffe7',
+            boxShadow: '0 0 30px rgba(0, 255, 231, 0.3)'
+          }}>
+            {/* Header with Logo and Open Button */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '1.5rem',
+              borderBottom: '1px solid #333',
+              paddingBottom: '1rem'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <img 
+                  src={selectedApp.icon} 
+                  alt={selectedApp.name}
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '0.5rem',
+                    objectFit: 'cover'
+                  }}
+                />
+                <h2 style={{ color: '#00ffe7', margin: 0 }}>{selectedApp.name}</h2>
+              </div>
+              <button
+                onClick={handleOpenApp}
+                style={{
+                  backgroundColor: '#00ffe7',
+                  color: '#1a1a1a',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem'
+                }}
+              >
+                Open
+              </button>
+            </div>
+
+            {/* Description */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ color: '#00ffe7', marginBottom: '0.5rem' }}>Description</h3>
+              <p style={{ color: '#ccc', lineHeight: '1.6', margin: 0 }}>
+                {appDetails[selectedApp.name]?.description || 'No description available.'}
+              </p>
+            </div>
+
+            {/* Ratings */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ color: '#00ffe7', marginBottom: '0.5rem' }}>Rating</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <span style={{ color: '#ffd700', fontSize: '1.2rem' }}>
+                  {renderStars(appDetails[selectedApp.name]?.rating || 0)}
+                </span>
+                <span style={{ color: '#ccc' }}>
+                  {appDetails[selectedApp.name]?.rating || 0}/5 ({appDetails[selectedApp.name]?.reviews || 0} reviews)
+                </span>
+              </div>
+            </div>
+
+            {/* Bugs and Reviews */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h3 style={{ color: '#00ffe7', marginBottom: '0.5rem' }}>Status</h3>
+              <div style={{ display: 'flex', gap: '2rem' }}>
+                <div>
+                  <span style={{ color: '#ff6b6b' }}>🐛 Bugs: </span>
+                  <span style={{ color: '#ccc' }}>{appDetails[selectedApp.name]?.bugs || 0}</span>
+                </div>
+                <div>
+                  <span style={{ color: '#4ecdc4' }}>📝 Reviews: </span>
+                  <span style={{ color: '#ccc' }}>{appDetails[selectedApp.name]?.reviews || 0}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={handleClosePopup}
+              style={{
+                backgroundColor: 'transparent',
+                color: '#00ffe7',
+                border: '1px solid #00ffe7',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '0.5rem',
+                cursor: 'pointer',
+                width: '100%',
+                fontSize: '1rem'
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
