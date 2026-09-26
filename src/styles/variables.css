@@ -1,0 +1,64 @@
+/* ═══════════════════════════════════════════
+   XAEZOR — CSS Design Tokens
+   ═══════════════════════════════════════════ */
+
+:root {
+  /* ── Background ── */
+  --bg-primary: #05070d;
+  --bg-secondary: #0a0e1a;
+  --bg-tertiary: #0d1224;
+  --bg-panel: rgba(5, 7, 13, 0.85);
+  --bg-glass: rgba(10, 14, 26, 0.6);
+
+  /* ── Accent Colors ── */
+  --blue-primary: #00d4ff;
+  --blue-secondary: #3b82f6;
+  --blue-dim: rgba(0, 212, 255, 0.15);
+  --blue-glow: rgba(0, 212, 255, 0.4);
+
+  --orange-primary: #ff6b35;
+  --orange-dim: rgba(255, 107, 53, 0.15);
+  --orange-glow: rgba(255, 107, 53, 0.4);
+
+  --magenta-primary: #c026d3;
+  --magenta-dim: rgba(192, 38, 211, 0.15);
+  --magenta-glow: rgba(192, 38, 211, 0.4);
+
+  /* ── Text ── */
+  --text-primary: #e8ecf4;
+  --text-secondary: rgba(232, 236, 244, 0.65);
+  --text-dim: rgba(232, 236, 244, 0.35);
+  --text-accent: var(--blue-primary);
+
+  /* ── Typography ── */
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', 'Chakra Petch', sans-serif;
+  --font-mono: 'Chakra Petch', 'Courier New', monospace;
+
+  /* ── Spacing ── */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 5rem;
+  --space-3xl: 8rem;
+
+  /* ── Borders ── */
+  --border-subtle: 1px solid rgba(0, 212, 255, 0.12);
+  --border-glow: 1px solid rgba(0, 212, 255, 0.35);
+  --border-radius: 4px;
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 600ms ease;
+
+  /* ── Z-Index Layers ── */
+  --z-canvas: 1;
+  --z-content: 10;
+  --z-hud-overlay: 50;
+  --z-panel: 20;
+  --z-loading: 100;
+  --z-hyperloop: 90;
+}

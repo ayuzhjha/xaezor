@@ -1,0 +1,171 @@
+/* ═══════════════════════════════════════════
+   XAEZOR — Global Styles
+   ═══════════════════════════════════════════ */
+@import './variables.css';
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: auto; /* let GSAP handle scroll */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+}
+
+a {
+  color: var(--blue-primary);
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── Utility: scanline overlay ── */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 255, 0.015) 2px,
+    rgba(0, 212, 255, 0.015) 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+/* ── Phase Transitions ── */
+.phase-fade-enter {
+  opacity: 0;
+}
+.phase-fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+.phase-fade-exit {
+  opacity: 1;
+}
+.phase-fade-exit-active {
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 212, 255, 0.25);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 212, 255, 0.5);
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #fff;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .scanlines::after {
+    display: none;
+  }
+}
+
+/* ── Keyframes ── */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  5% { opacity: 0.3; }
+  10% { opacity: 1; }
+  15% { opacity: 0.7; }
+  20% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes glitch-shift {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes breathing {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), 0 0 30px rgba(0, 212, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.5), 0 0 50px rgba(0, 212, 255, 0.2);
+  }
+}
+
+@keyframes scroll-cue {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+@keyframes boot-flicker {
+  0%, 100% { opacity: 1; }
+  49% { opacity: 1; }
+  50% { opacity: 0; }
+  51% { opacity: 1; }
+}
+
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dash-animate {
+  to { stroke-dashoffset: 0; }
+}

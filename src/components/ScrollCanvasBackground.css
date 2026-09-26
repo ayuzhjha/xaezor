@@ -1,0 +1,15 @@
+/* ═══════════════════════════════════
+   ScrollCanvasBackground Styles
+   ═══════════════════════════════════ */
+
+.scroll-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-canvas);
+  pointer-events: none;
+  /* Subtle darkening overlay for readability */
+  filter: brightness(0.7) contrast(1.1);
+}
